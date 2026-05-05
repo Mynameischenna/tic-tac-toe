@@ -29,6 +29,8 @@ public class Board {
 	}
 
     boolean isWin() {
+        // this is taking too much tc everytime its taking o(n2) for each move we are checking so total tc will be O(n^2 * n^2)
+        // we can bring dow this to O(n ^ 2)
         // rows
         for (int i = 0; i < size; i++) {
             if (checkLine(board[i][0], i, 0, 0, 1)) return true;
