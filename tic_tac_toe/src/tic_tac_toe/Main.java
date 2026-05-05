@@ -1,6 +1,5 @@
 package tic_tac_toe;
 
-import player.Move;
 import player.Player;
 import player.PlayerA;
 import player.PlayerB;

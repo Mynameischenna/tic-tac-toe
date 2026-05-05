@@ -13,7 +13,7 @@ public class Board {
 		this.size = size;
 		board = new Symbol[size][size];
 		
-		// initilize
+		// initialize
 		for (int i = 0; i < size; i++) {
 			Arrays.fill(board[i], Symbol.EMPTY);
 		}
@@ -28,36 +28,36 @@ public class Board {
 		return empty == 0;
 	}
 
-	 boolean isWin() {
-		 int one = 0;
-		 int two = 0;
-		 for (int i = 0; i < size; i++) {
-			 for (int j = 0; j < size; j++) {
-				 if (board[i][j] == Symbol.O) one ++;
-				 if (board[i][j] == Symbol.X) two ++;
-			 }
-			 if (one == size || two == size) return true; 
-			 one = 0;
-			 two = 0;
-			 for (int j = 0; j < size; j++) {
-				 if (board[j][i] == Symbol.O) one ++;
-				 if (board[j][i] == Symbol.X) two ++;
-			 }
-			 if (one == size || two == size) return true; 
-			 one = 0;
-			 two = 0;
-			 for (int j = 0; j < size; j++) {
-				 if (i == j)
-					 if (board[j][i] == Symbol.O) one ++;
-				 if (i == j)
-					 if (board[j][i] == Symbol.X) two ++;
-			 }
-			 if (one == size || two == size) return true; 
-			 
-		 }
-		return false;
-	}
+    boolean isWin() {
+        // rows
+        for (int i = 0; i < size; i++) {
+            if (checkLine(board[i][0], i, 0, 0, 1)) return true;
+        }
 
+        // columns
+        for (int j = 0; j < size; j++) {
+            if (checkLine(board[0][j], 0, j, 1, 0)) return true;
+        }
+
+        // main diagonal
+        if (checkLine(board[0][0], 0, 0, 1, 1)) return true;
+
+        // anti diagonal
+        if (checkLine(board[0][size - 1], 0, size - 1, 1, -1)) return true;
+
+        return false;
+    }
+
+    private boolean checkLine(Symbol symbol, int row, int col, int rStep, int cStep) {
+        if (symbol == Symbol.EMPTY) return false;
+
+        for (int i = 0; i < size; i++) {
+            if (board[row + i * rStep][col + i * cStep] != symbol) {
+                return false;
+            }
+        }
+        return true;
+    }
 	void placeMove(Move move, Symbol symbol) {
 		board[move.row][move.col] = symbol;
 		
